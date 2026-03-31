@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.springframework.samples</groupId>
   <artifactId>spring-petclinic</artifactId>
-  <version>3.1.0-SNAPSHOT</version>
+  <version>3.3.0-SNAPSHOT</version>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -25,6 +25,7 @@
     <webjars-bootstrap.version>5.2.3</webjars-bootstrap.version>
     <webjars-font-awesome.version>4.7.0</webjars-font-awesome.version>
 
+    <nexus.url>http://localhost:8081</nexus.url>
     <checkstyle.version>10.11.0</checkstyle.version>
     <jacoco.version>0.8.10</jacoco.version>
     <libsass.version>0.2.29</libsass.version>
@@ -34,6 +35,17 @@
     <spring-format.version>0.0.39</spring-format.version>
 
   </properties>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>${nexus.url}/repository/maven-snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>nexus-releases</id>
+      <url>${nexus.url}/repository/maven-releases/</url>
+    </repository>
+  </distributionManagement>
 
   <dependencies>
     <!-- Spring and Spring Boot dependencies -->
@@ -118,10 +130,34 @@
       <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>3.14.1</version>
+    </dependency>
+
   </dependencies>
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <doCheck>false</doCheck>
+          <doUpdate>false</doUpdate>
+          <shortRevisionLength>8</shortRevisionLength>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>io.spring.javaformat</groupId>
         <artifactId>spring-javaformat-maven-plugin</artifactId>
@@ -270,6 +306,10 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
+    </repository>
+    <repository>
+      <id>nexus-releases</id>
+      <url>${nexus.url}/repository/maven-releases/</url>
     </repository>
   </repositories>
 

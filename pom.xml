@@ -36,6 +36,13 @@
 
   </properties>
 
+  <scm>
+    <connection>scm:git:https://github.com/funny-insects/spring-petclinic.git</connection>
+    <developerConnection>scm:git:https://github.com/funny-insects/spring-petclinic.git</developerConnection>
+    <url>https://github.com/funny-insects/spring-petclinic</url>
+    <tag>HEAD</tag>
+  </scm>
+
   <distributionManagement>
     <snapshotRepository>
       <id>nexus-snapshots</id>
